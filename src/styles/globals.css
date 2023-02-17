@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  
+
 }
 
 * {
@@ -10,20 +10,20 @@ body {
 }
 
 .backgroundimg {
-  background: url("https://images.unsplash.com/photo-1559163387-e46e8dcb27f2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTR8NDM3MDcyN3x8ZW58MHx8fHw%3D&w=1000&q=80");
+  background: url("https://cdn5.vectorstock.com/i/1000x1000/53/79/to-do-list-neon-design-template-vector-40905379.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   filter: blur(2px);
-  -webkit-filter: blur(2  px);
-  height: 100vh;
+  -webkit-filter: blur(2 px);
   width: 100%;
+  height: 100vh;
 }
 
 .inner-container {
   backdrop-filter: blur(8px);
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0, 0.4); 
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
   color: white;
   font-weight: bold;
   border: 3px solid #f1f1f1;
@@ -35,16 +35,32 @@ body {
   width: 100%;
   padding: 20px;
   text-align: center;
+  margin: 10px;
 }
 
 .btn {
   border: none;
-  color: rgb(0, 0, 0); 
-  padding: 14px 28px; 
-  cursor: pointer; 
+  color: rgb(0, 0, 0);
+  padding: 14px 28px;
+  cursor: pointer;
   border-radius: 5px;
   background-color: #04AA6D;
   font-size: 18px;
+}
+
+.todo-status {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.completed {
+  color: green;
+}
+
+.incomplete {
+  color: red;
 }
 
 .btn:hover {
@@ -52,16 +68,16 @@ body {
 }
 
 .btn-delete {
-  width: 120px;
-  
+  width: auto;
   height: 50px;
   border: none;
-  color: rgb(0, 0, 0); 
-  padding: 14px 28px; 
-  cursor: pointer; 
+  color: rgb(0, 0, 0);
+  padding: 14px 28px;
+  cursor: pointer;
   border-radius: 5px;
   background-color: #aa1504;
   font-size: 18px;
+  margin-left: 10px;
 }
 
 .btn-delete:hover {
@@ -134,4 +150,3 @@ li {
   cursor: pointer;
   margin: 0 10px;
 }
-

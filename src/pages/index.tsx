@@ -6,9 +6,11 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage, setTodosPerPage] = useState(10);
   const [newTodo, setNewTodo] = useState("");
+  const incompleteTodos = todos.filter(todo => !todo.completed);
+  const completedTodos = todos.filter(todo => todo.completed);
   const limit = 10;
 
-//-----------------------------POST---------------------------------
+  //-----------------------------POST---------------------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -20,7 +22,7 @@ const Home = () => {
     setTodos([...todos, res.data]);
     setNewTodo("");
   };
-//-----------------------------Delete---------------------------------
+  //-----------------------------Delete---------------------------------
 
   const handleDelete = async (id: number) => {
     try {
@@ -30,9 +32,9 @@ const Home = () => {
       console.error(error);
     }
   };
-//-----------------------------GET---------------------------------
+  //-----------------------------GET---------------------------------
 
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get("https://jsonplaceholder.typicode.com/todos");
       setTodos(result.data);
@@ -40,14 +42,29 @@ useEffect(() => {
 
     fetchData();
   }, []);
-//-----------------------------Pagination---------------------------------
+  //-----------------------------Pagination---------------------------------
 
   const indexOfLastTodo = currentPage * todosPerPage;
   const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
   const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    setTodosPerPage(limit);
+  };
 
+  const handleComplete = async (id: number) => {
+    try {
+      const response = await axios.patch(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+        { completed: !todos.find(todo => todo.id === id)?.completed }
+      );
+      const updatedTodo = response.data as Todo;
+      setTodos(todos.map(todo => (todo.id === id ? updatedTodo : todo)));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -64,10 +81,20 @@ useEffect(() => {
         </form>
         <ul>
           {currentTodos.map((todo) => (
-            <li key={todo.id}>{todo.title}
+            <li key={todo.id}>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={() => handleComplete(todo.id)}
+              />
+              <span style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
+                {todo.title}
+              </span>
+              <span className={`todo-status ${todo.completed ? "completed" : "incomplete"}`}>
+                {todo.completed ? "Completed" : "Incomplete"}
+              </span>
               <button className="btn-delete" onClick={() => handleDelete(todo.id)}>Delete</button>
             </li>
-
           ))}
         </ul>
         <div className="pagination">
